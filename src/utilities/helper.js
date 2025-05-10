@@ -4,6 +4,18 @@ class helper {
     setToken(token){
         localStorage.setItem('token', token);
     }
+    setUserInfo(username){
+        localStorage.setItem('username', username);
+    }
+    setUserEmail(email){
+        localStorage.setItem('email', email);
+    }
+    getUserInfo(){
+        return localStorage.getItem('username');
+    }
+    getUserEmail(){
+        return localStorage.getItem('email');
+    }
     getToken(){
         return localStorage.getItem('token');
     }
@@ -22,5 +34,9 @@ export const {
     ErrorToast,
     SuccessToast,
     setToken,
-    getToken
+    getToken,
+    setUserInfo,
+    getUserInfo,
+    setUserEmail,
+    getUserEmail
 } = new helper();

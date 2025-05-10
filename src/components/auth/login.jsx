@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import {LoginRequest} from "../../APIRequest/APIRequest.jsx";
-import {useNavigate} from "react-router-dom";
+import { LoginRequest } from "../../APIRequest/APIRequest.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +9,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [loading, setLoading] = useState(false); // Add loading state
 
     const navigate = useNavigate();
 
@@ -44,14 +45,14 @@ const Login = () => {
         }
 
         if (isValid) {
+            setLoading(true);  // Set loading to true when the form is submitted
 
             const result = await LoginRequest(email, password);
             if (result === true) {
-                //window.location.href = "/";
+                // Navigate to home page on success
                 navigate("/");
             }
-
-
+            setLoading(false);  // Reset loading state after the request is completed
         }
     };
 
@@ -128,12 +129,18 @@ const Login = () => {
                             </div>
                         </div>
                     </div>
+
                     <div>
                         <button
                             type="submit"
+                            disabled={loading} // Disable the button when loading is true
                             className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
-                            Sign in
+                            {loading ? (
+                                <div className="w-5 h-5 border-4 border-t-transparent border-blue-600 rounded-full animate-spin"></div> // Loader
+                            ) : (
+                                'Sign in'
+                            )}
                         </button>
                     </div>
                 </form>

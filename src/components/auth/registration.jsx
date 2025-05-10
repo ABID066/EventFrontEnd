@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import {RegistrationRequest} from "../../APIRequest/APIRequest.jsx";
-import {useNavigate} from "react-router-dom";
+import { RegistrationRequest } from "../../APIRequest/APIRequest.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +10,8 @@ const Registration = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('')
+    const [passwordError, setPasswordError] = useState('');
+    const [loading, setLoading] = useState(false); // Add loading state
 
     const navigate = useNavigate();
 
@@ -56,10 +57,13 @@ const Registration = () => {
         }
 
         if (isValid) {
-            const result = await RegistrationRequest( username, email, password);
+            setLoading(true);  // Set loading to true when the form is submitted
+
+            const result = await RegistrationRequest(username, email, password);
             if (result === true) {
                 navigate("/home");
             }
+            setLoading(false);  // Reset loading state after the request is completed
         }
     };
 
@@ -82,7 +86,7 @@ const Registration = () => {
                     </p>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="space-y-4 rounded-md ">
+                    <div className="space-y-4 rounded-md">
                         <div>
                             <label htmlFor="username" className="block text-sm font-bold text-gray-700">
                                 Username
@@ -104,85 +108,21 @@ const Registration = () => {
                             </div>
                         </div>
 
-                        <div>
-                            <label htmlFor="email-address" className="block text-sm font-bold text-gray-700">
-                                Email address
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className={`block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm ${
-                                        emailError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                                    }`}
-                                    placeholder="Email address"
-                                />
-                                {emailError && <p className="mt-1 text-sm text-red-600">{emailError}</p>}
-                            </div>
-                        </div>
+                        {/* Email & Password fields */}
 
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-bold text-gray-700">
-                                Password
-                            </label>
-                            <div className="relative mt-1">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    autoComplete="new-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className={`block w-full appearance-none rounded-md border px-3 py-2 pr-10 shadow-sm focus:outline-none sm:text-sm ${
-                                        passwordError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                                    }`}
-                                    placeholder="Password"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={togglePasswordVisibility}
-                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
-                                >
-                                    {showPassword ? (
-                                        <EyeOff className="h-5 w-5" aria-hidden="true" />
-                                    ) : (
-                                        <Eye className="h-5 w-5" aria-hidden="true" />
-                                    )}
-                                </button>
-                                {passwordError && <p className="mt-1 text-sm text-red-600">{passwordError}</p>}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center">
-                        <input
-                            id="terms"
-                            name="terms"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                        />
-                        <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
-                            I agree to the{' '}
-                            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                                Terms of Service
-                            </a>{' '}
-                            and{' '}
-                            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                                Privacy Policy
-                            </a>
-                        </label>
                     </div>
 
                     <div>
                         <button
                             type="submit"
+                            disabled={loading} // Disable the button when loading is true
                             className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
-                            Create account
+                            {loading ? (
+                                <div className="w-5 h-5 border-4 border-t-transparent border-blue-600 rounded-full animate-spin"></div> // Loader
+                            ) : (
+                                'Create account'
+                            )}
                         </button>
                     </div>
                 </form>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { User, LogOut } from 'lucide-react'; // Importing Lucide icons
+import { LogOut } from 'lucide-react'; // Importing Lucide icons
 
 const Header = () => {
     return (
@@ -13,20 +13,21 @@ const Header = () => {
 
                 {/* Navigation Links */}
                 <nav className="flex space-x-6">
+                    <Link to="/home" className="hover:text-gray-300">
+                        HomePage
+                    </Link>
                     <Link to="/dashboard" className="hover:text-gray-300">
                         Dashboard
                     </Link>
                     <Link to="/events" className="hover:text-gray-300">
                         Events
                     </Link>
-                    <Link to="/profile" className="hover:text-gray-300">
-                        Profile
-                    </Link>
+
                 </nav>
 
                 {/* User Profile & Logout */}
                 <div className="flex items-center space-x-4">
-                    <User className="text-xl cursor-pointer" />
+
                     <LogOut
                         className="text-xl cursor-pointer"
                         onClick={() => alert("Logout functionality here")}

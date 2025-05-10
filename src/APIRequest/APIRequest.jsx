@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ErrorToast, setToken, SuccessToast} from "../utilities/helper.js";
+import {ErrorToast, setToken, setUserEmail, setUserInfo, SuccessToast} from "../utilities/helper.js";
 
 
 const BaseURL = "https://event-back-end.vercel.app/api";
@@ -18,6 +18,8 @@ export async function RegistrationRequest(username, email, password) {
         if (res.status === 201) {
             if (res.data.message === "User registered successfully") {
                 setToken(res.data["token"]);
+                setUserInfo(res.data["user"]["username"]);
+                setUserEmail(res.data["user"]["email"]);
                 SuccessToast("Registration Success");
                 return true;
             }
@@ -50,7 +52,9 @@ export async function LoginRequest(email, password) {
         if (res.status === 200) {
             if (res.data.message === "Login successful") {
             setToken(res.data["token"]);
-            SuccessToast("Registration Success");
+            setUserInfo(res.data["user"]["username"]);
+            setUserEmail(res.data["user"]["email"]);
+            SuccessToast("Login Success");
             return true;
             }
         }

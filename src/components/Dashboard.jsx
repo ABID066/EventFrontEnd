@@ -1,5 +1,6 @@
 import React from 'react';
 import { PlusCircle, Calendar, Edit, Trash } from 'lucide-react';
+import {getUserEmail, getUserInfo} from "../utilities/helper.js";
 
 const Dashboard = () => {
     return (
@@ -17,9 +18,8 @@ const Dashboard = () => {
             <div className="bg-white p-6 rounded-lg shadow-md mb-8">
                 <h2 className="text-xl font-semibold mb-4">Your Profile</h2>
                 <div className="space-y-2">
-                    <p><strong>Name:</strong> John Doe</p>
-                    <p><strong>Email:</strong> johndoe@example.com</p>
-                    <button className="text-blue-600 hover:underline">Edit Profile</button>
+                    <p><strong>User Name:</strong> {getUserInfo()}</p>
+                    <p><strong>Email:</strong> {getUserEmail()}</p>
                 </div>
             </div>
 
