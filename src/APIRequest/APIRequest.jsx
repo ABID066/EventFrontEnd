@@ -1,8 +1,14 @@
 import axios from "axios";
-import {ErrorToast, setToken, setUserEmail, setUserInfo, SuccessToast} from "../utilities/helper.js";
+import {ErrorToast, getToken, setToken, setUserEmail, setUserInfo, SuccessToast} from "../utilities/helper.js";
+import store from "../redux/store/store.js";
+import {SetAll} from "../redux/state-slice/event-slice.js";
 
 
 const BaseURL = "https://event-back-end.vercel.app/api";
+
+const AxiHeaders = () => ({
+    headers: {"Authorization": getToken()}
+});
 
 
 // Registration
@@ -62,5 +68,21 @@ export async function LoginRequest(email, password) {
         ErrorToast("Invalid Email or Password"); // More specific error
         console.error("Login Error:", err);
         return false;
+    }
+}
+
+
+//Show all eventSlice
+export async function ShowAllEvent() {
+    let URL = BaseURL + "/events";
+    try {
+        let res = await axios.get(URL, AxiHeaders());
+        if (res.status === 200) {
+            store.dispatch(SetAll(res.data.events))
+            //console.log(res.data.events);
+        }
+    } catch (err) {
+        console.log(err);
+        ErrorToast("Something Went Wrong");
     }
 }

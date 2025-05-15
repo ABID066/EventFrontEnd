@@ -108,8 +108,55 @@ const Registration = () => {
                             </div>
                         </div>
 
-                        {/* Email & Password fields */}
+                        {/* Email field */}
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-bold text-gray-700">
+                                Email
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className={`block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm ${
+                                        emailError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                                    }`}
+                                    placeholder="Email"
+                                />
+                                {emailError && <p className="mt-1 text-sm text-red-600">{emailError}</p>}
+                            </div>
+                        </div>
 
+                        {/* Password field */}
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-bold text-gray-700">
+                                Password
+                            </label>
+                            <div className="mt-1 relative">
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    autoComplete="current-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className={`block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm ${
+                                        passwordError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                                    }`}
+                                    placeholder="Password"
+                                />
+                                <div
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {showPassword ? <EyeOff className="h-5 w-5 text-gray-500" /> : <Eye className="h-5 w-5 text-gray-500" />}
+                                </div>
+                                {passwordError && <p className="mt-1 text-sm text-red-600">{passwordError}</p>}
+                            </div>
+                        </div>
                     </div>
 
                     <div>
