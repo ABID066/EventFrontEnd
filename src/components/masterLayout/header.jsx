@@ -19,9 +19,7 @@ const Header = () => {
                     <Link to="/dashboard" className="hover:text-gray-300">
                         Dashboard
                     </Link>
-                    <Link to="/events" className="hover:text-gray-300">
-                        Events
-                    </Link>
+
 
                 </nav>
 
