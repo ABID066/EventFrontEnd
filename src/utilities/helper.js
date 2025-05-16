@@ -27,6 +27,10 @@ class helper {
     SuccessToast(msg) {
         toast.success(msg, {position: "bottom-center"});
     }
+    removeSession=()=>{
+        localStorage.clear();
+        window.location.href="/login";
+    }
 }
 
 
@@ -38,5 +42,6 @@ export const {
     setUserInfo,
     getUserInfo,
     setUserEmail,
-    getUserEmail
+    getUserEmail,
+    removeSession
 } = new helper();

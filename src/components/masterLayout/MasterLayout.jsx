@@ -2,8 +2,14 @@ import React from 'react';
 
 import {Link} from "react-router-dom";
 import {LogOut} from "lucide-react";
+import {removeSession} from "../../utilities/helper.js";
 
 const MasterLayout = ({ children }) => {
+
+    const onLogout=()=>{
+        removeSession();
+    }
+
     return (
         <div className="flex flex-col min-h-screen">
             {/* Header */}
@@ -31,7 +37,7 @@ const MasterLayout = ({ children }) => {
 
                         <LogOut
                             className="text-xl cursor-pointer"
-                            onClick={() => alert("Logout functionality here")}
+                            onClick={onLogout}
                         />
                     </div>
                 </div>
