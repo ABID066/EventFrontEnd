@@ -1,12 +1,29 @@
-# React + Vite
+# Event Listing Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a full-stack project with both frontend and backend components. Below are the details for accessing the live demo, logging in, and additional resources for the backend and Postman documentation.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can access the live version of the project at the following link:
 
-## Expanding the ESLint configuration
+[Live Demo Link](https://event-front-end-5.vercel.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Login Credentials
+
+To log in to the application, use the following credentials:
+
+- **Email**: abid@gmail.com
+- **Password**: 112233
+
+## Backend Project Link
+
+The backend for this project is hosted on GitHub. You can access the repository with the following link:
+
+[Backend Project Link](https://github.com/ABID066/EventBackEnd)
+
+## Postman Documentation
+
+The API documentation for testing and using the endpoints is available on Postman. You can view it by clicking the link below:
+
+[Postman Documentation Link](https://documenter.getpostman.com/view/32810522/2sB2qWH4hh)
+
