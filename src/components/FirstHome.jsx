@@ -1,158 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, ChevronRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { ShowAllEvent } from '../APIRequest/APIRequest.jsx';
 
 const FirstHome = () => {
-    // State for events
-    const [events, setEvents] = useState([]);
+    const dispatch = useDispatch();
+    const events = useSelector((state) => state.event.All);
+
+    // State declarations - all hooks must be at the top level
     const [categories, setCategories] = useState([]);
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // Sample banner images - replace with your actual images
-    const bannerImages = [
-        "../assets/banner1.jpeg",  // Replace with your actual image paths
-        "../assets/banner2.jpeg",
-        "../assets/banner2.jpeg"
-
-    ];
     const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
+    // Banner images
+    const bannerImages = [
+        "../assets/banner1.jpeg",
+        "../assets/banner2.jpeg",
+        "../assets/banner2.jpeg"
+    ];
 
-
-    // Function to fetch events from API
+    // Fetch events from API
     useEffect(() => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-
-
-                // For demo purposes, using your provided data instead of API call
-                // In a real application, you would use the API call below:
-                /*
-                if (!token) {
-                  setError('Authentication required. Please log in.');
-                  setLoading(false);
-                  return;
-                }
-
-                const response = await fetch('https://event-back-end.vercel.app/api/events', {
-                  headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                  }
-                });
-
-                if (response.status === 401) {
-                  setError('Session expired. Please log in again.');
-                  return;
-                }
-
-                if (!response.ok) {
-                  throw new Error(`Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                */
-
-                // Using your provided sample data
-                const data = [
-                    {
-                        "_id": "680cdea24a93cb1c75feb3ab",
-                        "name": "Music Concert",
-                        "date": "2025-06-15T18:00:00.000Z",
-                        "time": "18:00",
-                        "location": "Madison Square Garden, New York",
-                        "description": "A live music concert featuring top artists from around the world.",
-                        "category": "Music",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680cdea34a93cb1c75feb3af",
-                        "name": "Music Concert",
-                        "date": "2025-06-15T18:00:00.000Z",
-                        "time": "18:00",
-                        "location": "Madison Square Garden, New York",
-                        "description": "A live music concert featuring top artists from around the world.",
-                        "category": "Music",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680cdfc54a93cb1c75feb3b7",
-                        "name": "Music Concert",
-                        "date": "2025-06-15T18:00:00.000Z",
-                        "time": "18:00",
-                        "location": "Madison Square Garden, New York",
-                        "description": "A live music concert featuring top artists from around the world.",
-                        "category": "Music",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680cdfda4a93cb1c75feb3bb",
-                        "name": "Tech Conference 2025",
-                        "date": "2025-09-10T09:00:00.000Z",
-                        "time": "09:00",
-                        "location": "San Francisco Convention Center, California",
-                        "description": "The biggest tech conference where industry leaders will discuss emerging technologies.",
-                        "category": "Technology",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680cdfec4a93cb1c75feb3bf",
-                        "name": "Food Festival",
-                        "date": "2025-08-25T12:00:00.000Z",
-                        "time": "12:00",
-                        "location": "Central Park, New York",
-                        "description": "A fun-filled day with various food trucks, street food, and cooking workshops.",
-                        "category": "Food & Drink",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680ce0034a93cb1c75feb3c3",
-                        "name": "Marathon 2025",
-                        "date": "2025-10-02T07:00:00.000Z",
-                        "time": "07:00",
-                        "location": "Boston City Center",
-                        "description": "An annual marathon event with participants from around the world.",
-                        "category": "Sports",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680ce01f4a93cb1c75feb3c7",
-                        "name": "Art Exhibition",
-                        "date": "2025-07-05T10:00:00.000Z",
-                        "time": "10:00",
-                        "location": "The Louvre, Paris",
-                        "description": "An exhibition showcasing the finest modern art pieces by international artists.",
-                        "category": "Art",
-                        "createEmail": "abid@gmail.com"
-                    },
-                    {
-                        "_id": "680ce0fb4a93cb1c75feb3cf",
-                        "name": "Art Exhibition",
-                        "date": "2025-07-05T10:00:00.000Z",
-                        "time": "10:00",
-                        "location": "The Louvre, Paris",
-                        "description": "An exhibition showcasing the finest modern art pieces by international artists.",
-                        "category": "Art",
-                        "createEmail": "abid@gmail.com"
-                    }
-                ];
-
-                setEvents(data);
-
-                // Extract unique categories
-                const uniqueCategories = [...new Set(data.map(event => event.category))];
-                setCategories(uniqueCategories);
-
-                // Filter upcoming events (events with dates after today)
-                const today = new Date();
-                const upcoming = data.filter(event => new Date(event.date) > today);
-                // Sort by date (closest first)
-                upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
-                setUpcomingEvents(upcoming);
-
+                await ShowAllEvent(dispatch);
                 setError(null);
             } catch (err) {
                 setError('Failed to fetch events: ' + err.message);
@@ -170,9 +45,24 @@ const FirstHome = () => {
         }, 5000);
 
         return () => clearInterval(bannerInterval);
-    }, []);
+    }, [dispatch]);
 
-    // Function to format date
+    // Process events data - moved up before any conditional returns
+    useEffect(() => {
+        if (events.length > 0) {
+            // Extract unique categories
+            const uniqueCategories = [...new Set(events.map(event => event.category))];
+            setCategories(uniqueCategories);
+
+            // Filter upcoming events
+            const today = new Date();
+            const upcoming = events.filter(event => new Date(event.date) > today);
+            upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
+            setUpcomingEvents(upcoming);
+        }
+    }, [events]);
+
+    // Format date function
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -182,7 +72,7 @@ const FirstHome = () => {
         });
     };
 
-    // Get background color for category badge based on category name
+    // Get background color for category badge
     const getCategoryColor = (category) => {
         const colorMap = {
             'Music': 'bg-purple-100 text-purple-800',
@@ -191,17 +81,15 @@ const FirstHome = () => {
             'Sports': 'bg-green-100 text-green-800',
             'Art': 'bg-pink-100 text-pink-800'
         };
-
         return colorMap[category] || 'bg-gray-100 text-gray-800';
     };
 
-    // Get icon for category
+    // Get category icon
     const getCategoryIcon = (category) => {
-        // You would import actual icons for each category
-        // For now returning placeholder text
         return category.charAt(0).toUpperCase();
     };
 
+    // Render based on loading/error state
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -222,14 +110,12 @@ const FirstHome = () => {
 
     return (
         <div className="min-h-screen">
-            {/* Banner Section with Carousel */}
+            {/* Banner Section */}
             <div className="relative h-96 overflow-hidden">
                 {bannerImages.map((image, index) => (
                     <div
                         key={index}
-                        className={`absolute inset-0 transition-opacity duration-1000 ${
-                            index === currentBannerIndex ? 'opacity-100' : 'opacity-0'
-                        }`}
+                        className={`absolute inset-0 transition-opacity duration-1000 ${index === currentBannerIndex ? 'opacity-100' : 'opacity-0'}`}
                     >
                         <img
                             src={image}
@@ -252,9 +138,7 @@ const FirstHome = () => {
                         <button
                             key={index}
                             onClick={() => setCurrentBannerIndex(index)}
-                            className={`w-3 h-3 rounded-full ${
-                                index === currentBannerIndex ? 'bg-white' : 'bg-white bg-opacity-50'
-                            }`}
+                            className={`w-3 h-3 rounded-full ${index === currentBannerIndex ? 'bg-white' : 'bg-white bg-opacity-50'}`}
                             aria-label={`Go to slide ${index + 1}`}
                         />
                     ))}

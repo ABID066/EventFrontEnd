@@ -72,14 +72,14 @@ export async function LoginRequest(email, password) {
 }
 
 
-//Show all eventSlice
-export async function ShowAllEvent() {
+// Updated ShowAllEvent
+export async function ShowAllEvent(dispatch) {
     let URL = BaseURL + "/events";
     try {
         let res = await axios.get(URL, AxiHeaders());
         if (res.status === 200) {
-            store.dispatch(SetAll(res.data.events))
-            //console.log(res.data.events);
+            dispatch(SetAll(res.data.events)); // Dispatch data to Redux
+            console.log(res.data.events); // Debugging API response
         }
     } catch (err) {
         console.log(err);
