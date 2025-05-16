@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage.jsx";
 import CategoryEventsPage from "./pages/CategoryEventsPage.jsx";
 import EventDetailsPage from "./pages/EventDetailsPage.jsx";
 import CreateEventPage from "./pages/CreateEventPage.jsx";
+import UpdateEventPage from "./pages/UpdateEventPage.jsx";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -34,6 +35,7 @@ const App = () => {
 
 
                     <Route path="/create-event" element={<ProtectedRoute><CreateEventPage /></ProtectedRoute>} />
+                    <Route path="/update-event/:eventId" element={<ProtectedRoute><UpdateEventPage /></ProtectedRoute>} />
 
                     {/*Catch-all Route for 404
                     <Route path="*" element={<Page404 />} />*/}
