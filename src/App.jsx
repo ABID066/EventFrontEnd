@@ -6,8 +6,8 @@ import RegistrationPage from "./pages/RegistrationPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import { getToken } from "./utilities/helper.js";
 import HomePage from "./pages/HomePage.jsx";
-//import EventDetailPage from "./pages/EventDetailPage.jsx"; // You need to create this page
-import CategoryEventsPage from "./pages/CategoryEventsPage.jsx"; // You need to create this page
+import CategoryEventsPage from "./pages/CategoryEventsPage.jsx";
+import EventDetailsPage from "./pages/EventDetailsPage.jsx";
 
 const ProtectedRoute = ({ children }) => {
     return getToken() ? children : <Navigate to="/login" replace />;
@@ -29,11 +29,11 @@ const App = () => {
 
                     <Route path="/events/category/:category" element={<ProtectedRoute><CategoryEventsPage /></ProtectedRoute>} />
 
-                    {/*
-                    <Route path="/events/:id" element={<ProtectedRoute><EventDetailPage /></ProtectedRoute>} />
+
+                    <Route path="/events/:eventId" element={<ProtectedRoute><EventDetailsPage /></ProtectedRoute>} />
 
 
-                     Catch-all Route for 404
+                    {/*Catch-all Route for 404
                     <Route path="*" element={<Page404 />} />*/}
                 </Routes>
             </BrowserRouter>
