@@ -3,6 +3,7 @@ import { PlusCircle, Calendar, Edit, Trash } from 'lucide-react';
 import { getUserEmail, getUserInfo } from "../utilities/helper.js";
 import { ShowAllEvent } from "../APIRequest/APIRequest.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -35,10 +36,11 @@ const Dashboard = () => {
             {/* Dashboard Heading */}
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold">Welcome to Your Dashboard</h1>
-                <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+
+                <Link to="/create-event" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
                     <PlusCircle size={20} />
                     <span>Create Event</span>
-                </button>
+                </Link>
             </div>
 
             {/* User Profile Section */}
